@@ -5,51 +5,6 @@ module.exports = {
 
 var { g: global, __dirname } = __turbopack_context__;
 {
-// const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
-// interface RoyaltyCalculationRequest {
-//   water_gel: number;
-//   nh4no3: number;
-//   powder_factor: number;
-// }
-// interface RoyaltyCalculationResponse {
-//   calculation_date: string;
-//   inputs: {
-//     water_gel_kg: number;
-//     nh4no3_kg: number;
-//     powder_factor: number;
-//   };
-//   calculations: {
-//     total_explosive_quantity: number;
-//     basic_volume: number;
-//     blasted_rock_volume: number;
-//     base_royalty: number;
-//     royalty_with_sscl: number;
-//     total_amount_with_vat: number;
-//   };
-//   rates_applied: {
-//     royalty_rate_per_cubic_meter: number;
-//     sscl_rate: string;
-//     vat_rate: string;
-//   };
-// }
-// export const calculateRoyalty = async (data: RoyaltyCalculationRequest): Promise<RoyaltyCalculationResponse> => {
-//   try {
-//     const response = await fetch(`${API_BASE_URL}/calculate-royalty`, {
-//       method: 'POST',
-//       headers: {
-//         'Content-Type': 'application/json',
-//       },
-//       body: JSON.stringify(data),
-//     });
-//     if (!response.ok) {
-//       throw new Error(`HTTP error! status: ${response.status}`);
-//     }
-//     return await response.json();
-//   } catch (error) {
-//     console.error('API call failed:', error);
-//     throw error;
-//   }
-// }; 
 // API URL configuration with environment-based fallback
 __turbopack_context__.s({
     "calculateRoyalty": (()=>calculateRoyalty)
@@ -581,17 +536,6 @@ function RoyaltyCalculator({ onCalculated }) {
                             }, void 0, true, {
                                 fileName: "[project]/app/components/RoyaltyCalculator.tsx",
                                 lineNumber: 185,
-                                columnNumber: 13
-                            }, this),
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                className: "text-sm text-gray-400",
-                                children: [
-                                    "Calculation Date: ",
-                                    new Date(royaltyData.calculation_date).toLocaleString()
-                                ]
-                            }, void 0, true, {
-                                fileName: "[project]/app/components/RoyaltyCalculator.tsx",
-                                lineNumber: 204,
                                 columnNumber: 13
                             }, this)
                         ]

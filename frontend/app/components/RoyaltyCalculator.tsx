@@ -200,10 +200,6 @@ export default function RoyaltyCalculator({ onCalculated }: RoyaltyCalculatorPro
                 </p>
               </div>
             </div>
-
-            <p className="text-sm text-gray-400">
-              Calculation Date: {new Date(royaltyData.calculation_date).toLocaleString()}
-            </p>
           </div>
         </div>
       )}
