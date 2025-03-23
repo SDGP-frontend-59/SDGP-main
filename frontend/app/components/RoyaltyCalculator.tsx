@@ -1,63 +1,3 @@
-// import React, { useState } from 'react';
-
-// interface RoyaltyCalculatorProps {
-//   onCalculated: (data: any) => void;
-// }
-
-// const RoyaltyCalculator: React.FC<RoyaltyCalculatorProps> = ({ onCalculated }) => {
-//   const [explosiveQuantity, setExplosiveQuantity] = useState<number>(0);
-//   const [rockVolume, setRockVolume] = useState<number>(0);
-
-//   const handleCalculate = () => {
-//     // Mock calculation for demonstration
-//     const calculations = {
-//       total_explosive_quantity: explosiveQuantity,
-//       blasted_rock_volume: rockVolume,
-//       total_amount_with_vat: explosiveQuantity * rockVolume * 0.1, // Example calculation
-//     };
-
-//     onCalculated({
-//       calculations,
-//       calculation_date: new Date().toISOString()
-//     });
-//   };
-
-//   return (
-//     <div className="space-y-4">
-//       <div>
-//         <label className="block text-sm font-medium mb-2">
-//           Explosive Quantity (kg)
-//         </label>
-//         <input
-//           type="number"
-//           value={explosiveQuantity}
-//           onChange={(e) => setExplosiveQuantity(Number(e.target.value))}
-//           className="w-full px-3 py-2 bg-gray-800 rounded-md text-white"
-//         />
-//       </div>
-//       <div>
-//         <label className="block text-sm font-medium mb-2">
-//           Rock Volume (m³)
-//         </label>
-//         <input
-//           type="number"
-//           value={rockVolume}
-//           onChange={(e) => setRockVolume(Number(e.target.value))}
-//           className="w-full px-3 py-2 bg-gray-800 rounded-md text-white"
-//         />
-//       </div>
-//       <button
-//         onClick={handleCalculate}
-//         className="w-full bg-blue-600 hover:bg-blue-700 py-2 px-4 rounded-md"
-//       >
-//         Calculate Royalty
-//       </button>
-//     </div>
-//   );
-// };
-
-// export default RoyaltyCalculator; 
-
 'use client';
 
 import { useState, FormEvent } from 'react';
@@ -108,10 +48,7 @@ export default function RoyaltyCalculator({ onCalculated }: RoyaltyCalculatorPro
   const [powderFactor, setPowderFactor] = useState('');
   const [loading, setLoading] = useState(false);
   const [royaltyData, setRoyaltyData] = useState<RoyaltyData | null>(null);
-  // This state is not used in the UI, so we'll remove it to fix the linting error
-
-  // We don't need to load saved calculations since we're not using them in the UI
-  // The calculations are directly read from localStorage when needed
+  
 
   const handleCalculateRoyalty = async (e: FormEvent) => {
     e.preventDefault();
@@ -133,58 +70,6 @@ export default function RoyaltyCalculator({ onCalculated }: RoyaltyCalculatorPro
     } finally {
       setLoading(false);
     }
-  };
-
-  const handleSaveCalculation = () => {
-    if (!royaltyData) return;
-
-    // Check if this calculation has already been saved
-    const existingSaved = localStorage.getItem('royaltyCalculations');
-    // Use the current state instead of creating a new local variable with the same name
-    const currentSavedCalculations = existingSaved ? JSON.parse(existingSaved) : [];
-    
-    // Create new calculation object
-    const newCalculation: SavedCalculation = {
-      id: Date.now().toString(),
-      date: new Date().toISOString(),
-      waterGel: parseFloat(waterGel),
-      nh4no3: parseFloat(nh4no3),
-      powderFactor: parseFloat(powderFactor),
-      totalAmount: royaltyData.calculations.total_amount_with_vat,
-      explosiveQuantity: royaltyData.calculations.total_explosive_quantity,
-      blastedVolume: royaltyData.calculations.blasted_rock_volume,
-      dueDate: royaltyData.calculation_date
-    };
-
-    // Check if this exact calculation already exists
-    const isDuplicate = currentSavedCalculations.some((calc: SavedCalculation) => 
-      calc.waterGel === newCalculation.waterGel &&
-      calc.nh4no3 === newCalculation.nh4no3 &&
-      calc.powderFactor === newCalculation.powderFactor &&
-      calc.totalAmount === newCalculation.totalAmount
-    );
-
-    if (isDuplicate) {
-      toast.error('This calculation has already been saved');
-      return;
-    }
-
-    // Add only the new calculation
-    const updatedCalculations = [...currentSavedCalculations, newCalculation];
-    localStorage.setItem('royaltyCalculations', JSON.stringify(updatedCalculations));
-    
-    // Since we're not tracking state for the calculations, we just save to localStorage
-    
-    // Update the mining stats
-    onCalculated({
-      ...royaltyData,
-      calculation_date: new Date().toISOString()
-    });
-    
-    toast.success('Calculation saved successfully!');
-
-    // Reset form after successful save
-    handleReset();
   };
 
   const handleReset = () => {
@@ -260,14 +145,8 @@ export default function RoyaltyCalculator({ onCalculated }: RoyaltyCalculatorPro
             <h2 className="text-xl font-semibold">Royalty Calculation Results</h2>
             <div className="space-x-4">
               <button
-                onClick={handleSaveCalculation}
-                className="px-4 py-2 bg-green-600 hover:bg-green-700 rounded-md text-sm font-medium transition-colors"
-              >
-                Save Calculation
-              </button>
-              <button
                 onClick={handleReset}
-                className="px-4 py-2 bg-gray-600 hover:bg-gray-700 rounded-md text-sm font-medium transition-colors"
+                className="px-4 py-2 bg-green-600 hover:bg-green-700 rounded-md text-sm font-medium transition-colors"
               >
                 Reset
               </button>
